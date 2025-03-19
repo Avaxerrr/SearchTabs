@@ -2,6 +2,9 @@
 
 SearchTabs is a lightweight desktop wrapper application for Perplexity with a tabbed interface, built using PySide6 (Qt for Python). This unofficial app provides a more efficient way to use Perplexity with multiple tabs, offering a potentially lower resource footprint compared to Electron-based alternatives.
 
+## Why "SearchTabs"?
+The name "SearchTabs" was chosen to highlight the app's primary differentiating feature - the ability to use multiple search tabs in a single window - while also respecting trademark considerations. Unlike names that might incorporate "Perplexity" directly, "SearchTabs" establishes this application as an independent tool that enhances the Perplexity web experience through tabbed browsing, without implying any official affiliation.
+
 ## Features
 
 - **Tabbed Interface**: Unlike the official Perplexity desktop app, SearchTabs allows you to open multiple Perplexity sessions in tabs
