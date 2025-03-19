@@ -22,6 +22,33 @@ class ThinProgressBar(QProgressBar):
             }
         """)
 
+    # Add this method to the ThinProgressBar class
+    def update_theme(self, theme):
+        """Update progress bar color based on theme"""
+        if theme == "Light":
+            self.setStyleSheet("""
+                QProgressBar {
+                    border: none;
+                    background-color: transparent;
+                    max-height: 2px;
+                }
+                QProgressBar::chunk {
+                    background-color: #4285F4;
+                }
+            """)
+        else:
+            self.setStyleSheet("""
+                QProgressBar {
+                    border: none;
+                    background-color: transparent;
+                    max-height: 2px;
+                }
+                QProgressBar::chunk {
+                    background-color: #4285F4;
+                }
+            """)
+
+
 class FixedWidthTabBar(QTabBar):
     def __init__(self, parent=None):
         super().__init__(parent)

@@ -6,6 +6,7 @@ from ui.ui_components import ThinProgressBar, FixedWidthTabBar, BrowserTab
 from managers.profile_manager import ProfileManager
 from ui.navigation_controller import NavigationController
 from managers.shortcut_manager import ShortcutManager
+from managers.theme_manager import ThemeManager
 from ui.ui_event_handlers import UIEventHandlers
 from core.settings_window import SettingsWindow
 
@@ -18,12 +19,11 @@ class BrowserWindow(QMainWindow):
         self.setWindowTitle("SearchTabs")
         self.setGeometry(100, 100, 1024, 768)
 
-        # Set dark background color
-        palette = self.palette()
-        palette.setColor(QPalette.Window, QColor("#191A1A"))
-        self.setPalette(palette)
-
         logger.info("Initializing browser window")
+
+        # Set up theme manager
+        self.theme_manager = ThemeManager()
+        self.theme_manager.theme_changed.connect(self.apply_theme)
 
         # Set up profile manager
         self.profile_manager = ProfileManager(self)
@@ -40,12 +40,6 @@ class BrowserWindow(QMainWindow):
         self.tabs.setTabBar(FixedWidthTabBar())
         self.tabs.setTabsClosable(True)
         self.tabs.tabCloseRequested.connect(self.close_tab)
-        self.tabs.setStyleSheet("""
-            QTabWidget::pane { border: 0; }
-            QTabWidget::tab-bar { left: 0; }
-            QTabBar::tab { background: #191A1A; color: white; padding: 5px; }
-            QTabBar::tab:selected { background: #2D2E2E; }
-        """)
 
         # Create left corner buttons (Home and Add Tab)
         leftcorner = QWidget()
@@ -57,57 +51,21 @@ class BrowserWindow(QMainWindow):
         self.navigation_controller = NavigationController(self)
 
         # Home button
-        self.homebutton = QPushButton("🏠") #use a house emoji for the button icon
+        self.homebutton = QPushButton("🏠")  # use a house emoji for the button icon
         self.homebutton.setToolTip("Go to Perplexity.ai home")
         self.homebutton.clicked.connect(self.navigation_controller.go_home)
-        self.homebutton.setStyleSheet("""
-            QPushButton {
-                background-color: #191A1A;
-                color: white;
-                border: none;
-                padding: 5px;
-                border-radius: 3px;
-            }
-            QPushButton:hover {
-                background-color: #2D2E2E;
-            }
-        """)
         leftlayout.addWidget(self.homebutton)
 
         # Add Tab button
-        self.addtabbutton = QPushButton("+") #use a plus text for the add tab icon
+        self.addtabbutton = QPushButton("+")  # use a plus text for the add tab icon
         self.addtabbutton.setToolTip("Add new tab")
         self.addtabbutton.clicked.connect(self.add_new_tab)
-        self.addtabbutton.setStyleSheet("""
-            QPushButton {
-                background-color: #191A1A;
-                color: white;
-                border: none;
-                padding: 5px;
-                border-radius: 3px;
-            }
-            QPushButton:hover {
-                background-color: #2D2E2E;
-            }
-        """)
         leftlayout.addWidget(self.addtabbutton)
 
         # Create right corner button (Settings)
-        self.settingsbutton = QPushButton("⚙️") #use a gear emoji for the settings icon
+        self.settingsbutton = QPushButton("⚙️")  # use a gear emoji for the settings icon
         self.settingsbutton.setToolTip("Settings")
         self.settingsbutton.clicked.connect(self.showsettings)
-        self.settingsbutton.setStyleSheet("""
-            QPushButton {
-                background-color: #191A1A;
-                color: white;
-                border: none;
-                padding: 5px;
-                border-radius: 3px;
-            }
-            QPushButton:hover {
-                background-color: #2D2E2E;
-            }
-        """)
 
         # Set corner widgets
         self.tabs.setCornerWidget(leftcorner, Qt.Corner.TopLeftCorner)
@@ -125,6 +83,9 @@ class BrowserWindow(QMainWindow):
         # Set up UI event handlers
         self.ui_event_handlers = UIEventHandlers(self)
 
+        # Apply theme before creating the first tab
+        self.apply_theme(self.theme_manager.get_current_theme())
+
         # Create first tab
         self.add_new_tab()
 
@@ -136,10 +97,38 @@ class BrowserWindow(QMainWindow):
 
         logger.info("Browser window initialization complete")
 
+    def apply_theme(self, theme=None):
+        """Apply the current theme to all UI elements"""
+        logger.info(f"Applying theme: {theme if theme else self.theme_manager.get_current_theme()}")
+
+        # Apply palette to main window
+        self.setPalette(self.theme_manager.get_palette())
+
+        # Apply stylesheet to tabs and buttons
+        stylesheet = self.theme_manager.get_stylesheet()
+        self.tabs.setStyleSheet(stylesheet)
+        self.homebutton.setStyleSheet(stylesheet)
+        self.addtabbutton.setStyleSheet(stylesheet)
+        self.settingsbutton.setStyleSheet(stylesheet)
+
+        # Update existing tabs
+        colors = self.theme_manager.get_colors()
+        for i in range(self.tabs.count()):
+            tab = self.tabs.widget(i)
+            if hasattr(tab, 'webview'):
+                tab.webview.setStyleSheet(f"background-color: {colors['background']}")
+
+        # Update progress bar
+        self.progressbar.update_theme(self.theme_manager.get_effective_theme())
+
     def add_new_tab(self):
         newtab = BrowserTab(self.profile)
         index = self.tabs.addTab(newtab, "Loading...")
         self.tabs.setCurrentWidget(newtab)
+
+        # Apply theme to new tab
+        colors = self.theme_manager.get_colors()
+        newtab.webview.setStyleSheet(f"background-color: {colors['background']}")
 
         # Connect signals for tab title and loading progress
         newtab.webview.titleChanged.connect(
