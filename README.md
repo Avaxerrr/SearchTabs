@@ -44,7 +44,10 @@ python main.py
 
 ## Screenshots
 
-[Screenshots will be added here]
+![image](https://github.com/user-attachments/assets/efb88f47-0ccf-4e8f-820b-aedf300fb0f1)
+![image](https://github.com/user-attachments/assets/9143c958-31d6-4943-9e28-fd5a00292932)
+
+
 
 ## Roadmap
 
