@@ -96,6 +96,3 @@ SOFTWARE.
 SearchTabs is not affiliated with, associated with, or endorsed by Perplexity AI. This is an unofficial application created to provide a tabbed interface for accessing Perplexity's web services. Users should comply with Perplexity's terms of service when using this application.
 
 The primary purpose of this application is to provide a tabbed interface and potentially lower resource consumption compared to Electron-based alternatives. All Perplexity content is accessed through their official website, and this application does not modify, store, or redistribute any of Perplexity's proprietary content or services.
-
----
-Answer from Perplexity: pplx.ai/share
