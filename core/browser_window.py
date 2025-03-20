@@ -1,7 +1,7 @@
 import logging
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QMainWindow, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QApplication
-from PySide6.QtGui import QPalette, QColor
+from PySide6.QtGui import QPalette, QColor, QIcon
 from ui.ui_components import ThinProgressBar, FixedWidthTabBar, BrowserTab
 from managers.profile_manager import ProfileManager
 from ui.navigation_controller import NavigationController
@@ -56,19 +56,22 @@ class BrowserWindow(QMainWindow):
         self.navigation_controller = NavigationController(self)
 
         # Home button
-        self.homebutton = QPushButton("🏠")  # use a house emoji for the button icon
+        self.homebutton = QPushButton()
+        self.homebutton.setIcon(QIcon(self.theme_manager.get_themed_icon_path("home")))
         self.homebutton.setToolTip("Go to Perplexity.ai home")
         self.homebutton.clicked.connect(self.navigation_controller.go_home)
         leftlayout.addWidget(self.homebutton)
 
         # Add Tab button
-        self.addtabbutton = QPushButton("+")  # use a plus text for the add tab icon
+        self.addtabbutton = QPushButton()
+        self.addtabbutton.setIcon(QIcon(self.theme_manager.get_themed_icon_path("add")))
         self.addtabbutton.setToolTip("Add new tab")
         self.addtabbutton.clicked.connect(self.add_new_tab)
         leftlayout.addWidget(self.addtabbutton)
 
         # Create right corner button (Settings)
-        self.settingsbutton = QPushButton("⚙️")  # use a gear emoji for the settings icon
+        self.settingsbutton = QPushButton()
+        self.settingsbutton.setIcon(QIcon(self.theme_manager.get_themed_icon_path("settings")))
         self.settingsbutton.setToolTip("Settings")
         self.settingsbutton.clicked.connect(self.showsettings)
 
@@ -136,6 +139,10 @@ class BrowserWindow(QMainWindow):
 
         # Update progress bar
         self.progressbar.update_theme(self.theme_manager.get_effective_theme())
+
+        self.homebutton.setIcon(QIcon(self.theme_manager.get_themed_icon_path("home")))
+        self.addtabbutton.setIcon(QIcon(self.theme_manager.get_themed_icon_path("add")))
+        self.settingsbutton.setIcon(QIcon(self.theme_manager.get_themed_icon_path("settings")))
 
     def add_new_tab(self):
         newtab = BrowserTab(self.profile)

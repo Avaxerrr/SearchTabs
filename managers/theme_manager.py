@@ -224,3 +224,24 @@ class ThemeManager(QObject):
         if self.current_theme == "System":
             # Emit the signal to trigger UI updates
             self.theme_changed.emit("System")
+
+    def get_themed_icon_path(self, icon_name):
+        """Returns the path to the appropriate themed icon based on current theme and icon name"""
+        effective_theme = self.get_effective_theme()
+
+        # Icon mapping dictionary
+        icon_paths = {
+            "Light": {
+                "home": "icons/home_dark.png",
+                "add": "icons/add_tab_dark.png",
+                "settings": "icons/tune_dark.png"
+            },
+            "Dark": {
+                "home": "icons/home.png",
+                "add": "icons/add_tab.png",
+                "settings": "icons/tune.png"
+            }
+        }
+
+        theme_key = "Light" if effective_theme == "Light" else "Dark"
+        return icon_paths[theme_key].get(icon_name, "icons/setting.png")  # Default to settings icon
