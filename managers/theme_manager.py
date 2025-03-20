@@ -110,6 +110,106 @@ class ThemeManager(QObject):
             }}
         """
 
+    def get_settings_window_stylesheet(self):
+        """Returns a stylesheet specifically for the settings window"""
+        colors = self.get_colors()
+        effective_theme = self.get_effective_theme()
+
+        # Define different background colors for settings window
+        if effective_theme == "Light":
+            settings_bg = "#F0F0F0"  # Slightly darker than main background for light theme
+            checkbox_bg = "#FFFFFF"
+            checkbox_indicator_border = "#999999"
+            checkbox_indicator_checked_bg = "#4285F4"
+            radio_bg = "#FFFFFF"
+            radio_indicator_border = "#999999"
+            radio_indicator_checked_bg = "#4285F4"
+            groupbox_border = "#CCCCCC"
+        else:
+            settings_bg = "#252525"  # Slightly lighter than main background for dark theme
+            checkbox_bg = "#333333"
+            checkbox_indicator_border = "#666666"
+            checkbox_indicator_checked_bg = "#4285F4"
+            radio_bg = "#333333"
+            radio_indicator_border = "#666666"
+            radio_indicator_checked_bg = "#4285F4"
+            groupbox_border = "#444444"
+
+        return f"""
+            QDialog {{
+                background-color: {settings_bg};
+            }}
+
+            QGroupBox {{
+                font-weight: bold;
+                border: 1px solid {groupbox_border};
+                border-radius: 5px;
+                margin-top: 1ex;
+                padding-top: 10px;
+                color: {colors["text"]};
+            }}
+
+            QGroupBox::title {{
+                subcontrol-origin: margin;
+                subcontrol-position: top center;
+                padding: 0 5px;
+            }}
+
+            QCheckBox {{
+                color: {colors["text"]};
+                spacing: 8px;
+            }}
+
+            QCheckBox::indicator {{
+                width: 16px;
+                height: 16px;
+                border: 1px solid {checkbox_indicator_border};
+                border-radius: 3px;
+                background-color: {checkbox_bg};
+            }}
+
+            QCheckBox::indicator:checked {{
+                background-color: {checkbox_indicator_checked_bg};
+                border: 1px solid {checkbox_indicator_checked_bg};
+                image: url(:/icons/check.png);
+            }}
+
+            QRadioButton {{
+                color: {colors["text"]};
+                spacing: 8px;
+            }}
+
+            QRadioButton::indicator {{
+                width: 16px;
+                height: 16px;
+                border: 1px solid {radio_indicator_border};
+                border-radius: 8px;
+                background-color: {radio_bg};
+            }}
+
+            QRadioButton::indicator:checked {{
+                background-color: {radio_indicator_checked_bg};
+                border: 1px solid {radio_indicator_checked_bg};
+                image: url(:/icons/radio_check.png);
+            }}
+
+            QLabel {{
+                color: {colors["text"]};
+            }}
+
+            QPushButton {{
+                background-color: {colors["button_hover"]};
+                color: {colors["text"]};
+                border: none;
+                padding: 8px;
+                border-radius: 4px;
+            }}
+
+            QPushButton:hover {{
+                background-color: #4285F4;
+            }}
+        """
+
     def _start_theme_listener(self):
         """Start a background thread to listen for OS theme changes"""
         try:

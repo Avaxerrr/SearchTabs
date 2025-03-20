@@ -1,6 +1,6 @@
 import logging
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout, QPushButton
+from PySide6.QtWidgets import QMainWindow, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QApplication
 from PySide6.QtGui import QPalette, QColor
 from ui.ui_components import ThinProgressBar, FixedWidthTabBar, BrowserTab
 from managers.profile_manager import ProfileManager
@@ -17,7 +17,12 @@ class BrowserWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("SearchTabs")
-        self.setGeometry(100, 100, 1024, 768)
+
+        # Set initial size
+        self.resize(1024, 768)
+
+        # Center the window on screen
+        self.center_window()
 
         logger.info("Initializing browser window")
 
@@ -96,6 +101,17 @@ class BrowserWindow(QMainWindow):
         self.confirm_close_tabs = True
 
         logger.info("Browser window initialization complete")
+
+    def center_window(self):
+        # Get the screen geometry
+        screen = QApplication.primaryScreen().geometry()
+
+        # Calculate the center position
+        x = (screen.width() - self.width()) // 2
+        y = (screen.height() - self.height()) // 2
+
+        # Move the window to the center
+        self.move(x, y)
 
     def apply_theme(self, theme=None):
         """Apply the current theme to all UI elements"""
