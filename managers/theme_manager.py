@@ -9,19 +9,19 @@ class ThemeManager(QObject):
 
     # Theme color definitions
     LIGHT_THEME = {
-        "background": "#FCFCF9",
+        "background": "#F3F3EE",
         "text": "#000000",
         "tab_background": "#FCFCF9",
-        "tab_selected": "#E8E8E5",
+        "tab_selected": "#F3F3EE",
         "button_hover": "#E8E8E5",
         "progressbar": "#4285F4"
     }
 
     DARK_THEME = {
-        "background": "#191A1A",
+        "background": "#202222",
         "text": "#FFFFFF",
-        "tab_background": "#191A1A",
-        "tab_selected": "#2D2E2E",
+        "tab_background": "#181a1a",
+        "tab_selected": "#202222",
         "button_hover": "#2D2E2E",
         "progressbar": "#4285F4"
     }
@@ -117,7 +117,7 @@ class ThemeManager(QObject):
 
         # Define different background colors for settings window
         if effective_theme == "Light":
-            settings_bg = "#F0F0F0"  # Slightly darker than main background for light theme
+            settings_bg = "#F3F3EE"  # Slightly darker than main background for light theme
             checkbox_bg = "#FFFFFF"
             checkbox_indicator_border = "#999999"
             checkbox_indicator_checked_bg = "#4285F4"
@@ -125,8 +125,13 @@ class ThemeManager(QObject):
             radio_indicator_border = "#999999"
             radio_indicator_checked_bg = "#4285F4"
             groupbox_border = "#CCCCCC"
+            combobox_bg = "#FFFFFF"
+            combobox_text = "#000000"
+            combobox_border = "#CCCCCC"
+            combobox_arrow_bg = "#E8E8E5"
+            combobox_dropdown_bg = "#FFFFFF"
         else:
-            settings_bg = "#252525"  # Slightly lighter than main background for dark theme
+            settings_bg = "#202222"  # Slightly lighter than main background for dark theme
             checkbox_bg = "#333333"
             checkbox_indicator_border = "#666666"
             checkbox_indicator_checked_bg = "#4285F4"
@@ -134,6 +139,11 @@ class ThemeManager(QObject):
             radio_indicator_border = "#666666"
             radio_indicator_checked_bg = "#4285F4"
             groupbox_border = "#444444"
+            combobox_bg = "#333333"
+            combobox_text = "#FFFFFF"
+            combobox_border = "#444444"
+            combobox_arrow_bg = "#2D2E2E"
+            combobox_dropdown_bg = "#333333"
 
         return f"""
             QDialog {{
@@ -207,6 +217,35 @@ class ThemeManager(QObject):
 
             QPushButton:hover {{
                 background-color: #4285F4;
+            }}
+
+            QComboBox {{
+                background-color: {combobox_bg};
+                color: {combobox_text};
+                border: 1px solid {combobox_border};
+                border-radius: 3px;
+                padding: 5px;
+                min-width: 6em;
+            }}
+
+            QComboBox::drop-down {{
+                subcontrol-origin: padding;
+                subcontrol-position: top right;
+                width: 20px;
+                border-left: 1px solid {combobox_border};
+                background-color: {combobox_arrow_bg};
+            }}
+
+            QComboBox::down-arrow {{
+                width: 12px;
+                height: 12px;
+            }}
+
+            QComboBox QAbstractItemView {{
+                background-color: {combobox_dropdown_bg};
+                color: {combobox_text};
+                border: 0px solid {combobox_border};
+                selection-background-color: {colors["button_hover"]};
             }}
         """
 

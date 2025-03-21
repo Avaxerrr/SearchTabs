@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QLabel, QCheckBox, QPushButton,
-                               QFormLayout, QGroupBox, QRadioButton, QHBoxLayout)
+                               QFormLayout, QGroupBox, QHBoxLayout, QComboBox)
 from utils.log_terminal import LogTerminal
 import logging
 
@@ -11,7 +11,7 @@ class SettingsWindow(QDialog):
         self.setWindowTitle("Settings")
 
         # Set a larger fixed size to accommodate all content comfortably
-        self.setFixedSize(300, 600)
+        self.setFixedSize(300, 600)  # Slightly increased height to accommodate new section
 
         # Apply current theme to settings window
         self.setPalette(self.browserwindow.theme_manager.get_palette())
@@ -49,48 +49,54 @@ class SettingsWindow(QDialog):
         general_layout = QVBoxLayout()
         general_layout.setSpacing(10)  # Increase spacing between checkboxes
 
-        self.confirm_close_tabs_checkbox = QCheckBox("Confirm Before Closing Multiple Tabs")
+        self.confirm_close_tabs_checkbox = QCheckBox("Warning before closing")
         self.confirm_close_tabs_checkbox.setChecked(self.browserwindow.confirm_close_tabs)
 
-        self.alwaysontop_checkbox = QCheckBox("Always on Top")
-
-        self.clearhistory_checkbox = QCheckBox("Clear History/Cache")
-
         general_layout.addWidget(self.confirm_close_tabs_checkbox)
-        general_layout.addWidget(self.alwaysontop_checkbox)
-        general_layout.addWidget(self.clearhistory_checkbox)
-        general_layout.addStretch(1)  # Add stretch to push items to the top
 
         general_group.setLayout(general_layout)
         layout.addWidget(general_group)
 
+        # Privacy & Data Group
+        privacy_group = QGroupBox("Privacy and Data")
+        privacy_layout = QVBoxLayout()
+        privacy_layout.setSpacing(10)
+
+        self.reset_data_button = QPushButton("Reset Browser Data")
+        self.reset_data_button.clicked.connect(self.reset_browser_data)
+
+        # Add a small description label
+        reset_description = QLabel("Clears all browsing data and logs you out of websites")
+        reset_description.setWordWrap(True)
+        reset_description.setStyleSheet("color: gray; font-size: 10px;")
+
+        privacy_layout.addWidget(self.reset_data_button)
+        privacy_layout.addWidget(reset_description)
+
+        privacy_group.setLayout(privacy_layout)
+        layout.addWidget(privacy_group)
+
         # Theme Settings Group
         theme_group = QGroupBox("Theme Settings")
         theme_layout = QVBoxLayout()
-        theme_layout.setSpacing(10)  # Increase spacing between radio buttons
 
-        # Theme radio buttons
+        # Theme dropdown menu
         current_theme = self.browserwindow.theme_manager.get_current_theme()
+        self.theme_combo = QComboBox()
+        self.theme_combo.addItems(["System", "Light", "Dark"])
 
-        self.theme_system = QRadioButton("System")
-        self.theme_system.setChecked(current_theme == "System")
+        # Set current theme in dropdown
+        index = self.theme_combo.findText(current_theme)
+        if index >= 0:
+            self.theme_combo.setCurrentIndex(index)
 
-        self.theme_light = QRadioButton("Light")
-        self.theme_light.setChecked(current_theme == "Light")
-
-        self.theme_dark = QRadioButton("Dark")
-        self.theme_dark.setChecked(current_theme == "Dark")
-
-        theme_layout.addWidget(self.theme_system)
-        theme_layout.addWidget(self.theme_light)
-        theme_layout.addWidget(self.theme_dark)
-        theme_layout.addStretch(1)  # Add stretch to push items to the top
+        theme_layout.addWidget(self.theme_combo)
 
         theme_group.setLayout(theme_layout)
         layout.addWidget(theme_group)
 
         # Shortcuts Group - Improved layout
-        shortcuts_group = QGroupBox("Essential Shortcuts")
+        shortcuts_group = QGroupBox("App Shortcuts")
         shortcuts_layout = QFormLayout()
         shortcuts_layout.setSpacing(10)  # Increase spacing between rows
         shortcuts_layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
@@ -111,15 +117,11 @@ class SettingsWindow(QDialog):
         sendtotray_shortcut = QLabel("Ctrl+Shift+M")
         sendtotray_shortcut.setMinimumWidth(100)
 
-        alwaysontop_shortcut = QLabel("Ctrl+Shift+T")
-        alwaysontop_shortcut.setMinimumWidth(100)
-
         shortcuts_layout.addRow("Reload:", reload_shortcut)
         shortcuts_layout.addRow("Add New Tab:", addtab_shortcut)
         shortcuts_layout.addRow("Close Tab:", closetab_shortcut)
         shortcuts_layout.addRow("Switch Between Tabs:", switchtabs_shortcut)
         shortcuts_layout.addRow("Send to Tray:", sendtotray_shortcut)
-        shortcuts_layout.addRow("Always on Top:", alwaysontop_shortcut)
 
         shortcuts_group.setLayout(shortcuts_layout)
         layout.addWidget(shortcuts_group)
@@ -156,6 +158,10 @@ class SettingsWindow(QDialog):
 
         self.setLayout(layout)
 
+    def reset_browser_data(self):
+        """Call the profile manager to reset browser data"""
+        self.browserwindow.profile_manager.reset_browser_data()
+
     def show_log_terminal(self):
         """Show the log terminal window"""
         if not hasattr(self, 'log_terminal') or not self.log_terminal.isVisible():
@@ -174,12 +180,8 @@ class SettingsWindow(QDialog):
         self.browserwindow.confirm_close_tabs = self.confirm_close_tabs_checkbox.isChecked()
 
         # Save theme settings
-        if self.theme_light.isChecked():
-            self.browserwindow.theme_manager.set_theme("Light")
-        elif self.theme_dark.isChecked():
-            self.browserwindow.theme_manager.set_theme("Dark")
-        elif self.theme_system.isChecked():
-            self.browserwindow.theme_manager.set_theme("System")
+        selected_theme = self.theme_combo.currentText()
+        self.browserwindow.theme_manager.set_theme(selected_theme)
 
         # Apply the theme immediately
         self.browserwindow.apply_theme()
