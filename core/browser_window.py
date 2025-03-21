@@ -1,6 +1,7 @@
 import logging
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QApplication
+from PySide6.QtWidgets import QMainWindow, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QApplication, \
+    QMessageBox
 from PySide6.QtGui import QPalette, QColor, QIcon
 from ui.ui_components import ThinProgressBar, FixedWidthTabBar, BrowserTab
 from managers.profile_manager import ProfileManager
@@ -177,3 +178,26 @@ class BrowserWindow(QMainWindow):
             logger.info(f"Tab {index} closed")
         else:
             logger.info("Cannot close last tab")
+
+    def closeEvent(self, event):
+        if self.confirm_close_tabs:
+            close_dialog = QMessageBox(
+                QMessageBox.Question,
+                'Confirm Exit',
+                'Are you sure you want to close SearchTabs?',
+                QMessageBox.Yes | QMessageBox.No,
+                self
+            )
+            close_dialog.setDefaultButton(QMessageBox.No)
+
+            # Apply theme styling to the message box
+            self.theme_manager.apply_qmessagebox_style(close_dialog)
+
+            reply = close_dialog.exec_()
+
+            if reply == QMessageBox.Yes:
+                event.accept()
+            else:
+                event.ignore()
+        else:
+            event.accept()

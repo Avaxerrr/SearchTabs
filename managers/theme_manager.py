@@ -249,6 +249,82 @@ class ThemeManager(QObject):
             }}
         """
 
+    def get_qmessagebox_stylesheet(self):
+        """Returns a stylesheet specifically for QMessageBox"""
+        colors = self.get_colors()
+        effective_theme = self.get_effective_theme()
+
+        # Define specific colors for QMessageBox
+        if effective_theme == "Light":
+            messagebox_bg = "#F3F3EE"
+            messagebox_text = "#000000"
+            messagebox_button_bg = "#E8E8E5"
+            messagebox_button_hover = "#D0D0D0"
+            messagebox_button_text = "#000000"
+            messagebox_border = "#CCCCCC"
+        else:
+            messagebox_bg = "#202222"
+            messagebox_text = "#FFFFFF"
+            messagebox_button_bg = "#2D2E2E"
+            messagebox_button_hover = "#3D3E3E"
+            messagebox_button_text = "#FFFFFF"
+            messagebox_border = "#444444"
+
+        return f"""
+            QMessageBox {{
+                background-color: {messagebox_bg};
+                color: {messagebox_text};
+                border: 1px solid {messagebox_border};
+                border-radius: 5px;
+            }}
+
+            QMessageBox QLabel {{
+                color: {messagebox_text};
+                font-size: 12px;
+            }}
+
+            QMessageBox QPushButton {{
+                background-color: {messagebox_button_bg};
+                color: {messagebox_button_text};
+                border: none;
+                border-radius: 4px;
+                min-width: 80px;
+                min-height: 24px;
+                padding: 4px 16px;
+                font-weight: bold;
+            }}
+
+            QMessageBox QPushButton:hover {{
+                background-color: {messagebox_button_hover};
+            }}
+
+            QMessageBox QPushButton:focus {{
+                border: 1px solid {colors["progressbar"]};
+            }}
+
+            QMessageBox QPushButton:default {{
+                background-color: {colors["progressbar"]};
+                color: white;
+            }}
+
+            QMessageBox QPushButton:default:hover {{
+                background-color: #5294FF;
+            }}
+
+            QMessageBox QIcon {{
+                padding: 5px;
+            }}
+        """
+
+    def apply_qmessagebox_style(self, messagebox):
+        """Apply the theme styling to a QMessageBox instance"""
+        messagebox.setStyleSheet(self.get_qmessagebox_stylesheet())
+
+        # Set the palette for consistent coloring
+        messagebox.setPalette(self.get_palette())
+
+        return messagebox
+
     def _start_theme_listener(self):
         """Start a background thread to listen for OS theme changes"""
         try:

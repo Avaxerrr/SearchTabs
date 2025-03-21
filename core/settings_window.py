@@ -1,6 +1,9 @@
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QLabel, QCheckBox, QPushButton,
                                QFormLayout, QGroupBox, QHBoxLayout, QComboBox)
+from PySide6.QtGui import QDesktopServices
+from PySide6.QtCore import QUrl
 from utils.log_terminal import LogTerminal
+from ui.about import AboutDialog
 import logging
 
 
@@ -11,7 +14,7 @@ class SettingsWindow(QDialog):
         self.setWindowTitle("Settings")
 
         # Set a larger fixed size to accommodate all content comfortably
-        self.setFixedSize(300, 600)  # Slightly increased height to accommodate new section
+        self.setFixedSize(300, 720)  # Increased height to accommodate new section
 
         # Apply current theme to settings window
         self.setPalette(self.browserwindow.theme_manager.get_palette())
@@ -137,6 +140,23 @@ class SettingsWindow(QDialog):
         dev_group.setLayout(dev_layout)
         layout.addWidget(dev_group)
 
+        # About and Updates Group
+        about_group = QGroupBox("About and Updates")
+        about_layout = QVBoxLayout()
+        about_layout.setSpacing(10)
+
+        self.update_button = QPushButton("Check for Updates")
+        self.update_button.clicked.connect(self.open_github_repo)
+
+        self.about_button = QPushButton("About SearchTabs")
+        self.about_button.clicked.connect(self.show_about_dialog)
+
+        about_layout.addWidget(self.update_button)
+        about_layout.addWidget(self.about_button)
+
+        about_group.setLayout(about_layout)
+        layout.addWidget(about_group)
+
         # Save Button
         buttons_layout = QHBoxLayout()
         buttons_layout.setContentsMargins(0, 10, 0, 0)  # Add top margin
@@ -174,6 +194,13 @@ class SettingsWindow(QDialog):
             self.log_terminal.show()
         else:
             self.log_terminal.activateWindow()
+
+    def open_github_repo(self):
+        QDesktopServices.openUrl(QUrl("https://github.com/Avaxerrr/SearchTabs_Perplexity_Alternative"))
+
+    def show_about_dialog(self):
+        about_dialog = AboutDialog(self)
+        about_dialog.exec()
 
     def save_settings(self):
         # Save general settings
