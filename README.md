@@ -9,15 +9,17 @@ SearchTabs is a lightweight desktop wrapper application for Perplexity that brin
 
 ## Screenshots
 
-![dark_mode.png](icons/dark_mode.png)
-![light_mode.png](icons/light_mode.png)
-![settings.png](icons/settings.png)
+![Screenshot 2025-03-22 230720](https://github.com/user-attachments/assets/ad4b6f37-c8cb-4750-90f3-cb530a580886)
+![Screenshot 2025-03-22 230745](https://github.com/user-attachments/assets/fe7cb2b8-d9af-4a24-b2e7-05509cdc30cf)
+![Screenshot 2025-03-22 230853](https://github.com/user-attachments/assets/2f38ef4b-6831-46e7-b5d0-cb065307051e)
+
 
 ## Features
 
 - **Tabbed Interface**: Unlike the official Perplexity desktop app, SearchTabs allows you to open multiple Perplexity sessions in tabs
 - **Keyboard Shortcuts**: Includes essential shortcuts for tab management and navigation
 - **Theme Management**: Supports light and dark themes with automatic detection
+- **Lower Resource Usage**: Built with Python and PySide6 instead of Electron, and packaged with Nuitka.
 
 ## Releases
 
