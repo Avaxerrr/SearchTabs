@@ -1,104 +1,68 @@
 # SearchTabs
 
-SearchTabs is a lightweight desktop wrapper application for Perplexity with a tabbed interface, built using PySide6 (Qt for Python). This unofficial app provides a more efficient way to use Perplexity with multiple tabs, offering a potentially lower resource footprint compared to Electron-based alternatives.
+SearchTabs is a lightweight desktop wrapper application for Perplexity that brings tabbed browsing functionality to your research workflow. Built using Python with PySide6, this unofficial app allows you to conduct multiple research sessions simultaneously without the need to open a web browser or juggle between windows. Unlike the official Perplexity desktop application which limits users to a single session, SearchTabs enables seamless multitasking with its intuitive tab system - perfect for researchers, students, and professionals who need to explore multiple topics efficiently.
 
-## Why "SearchTabs"?
-The name "SearchTabs" was chosen to highlight the app's primary differentiating feature - the ability to use multiple search tabs in a single window - while also respecting trademark considerations. Unlike names that might incorporate "Perplexity" directly, "SearchTabs" establishes this application as an independent tool that enhances the Perplexity web experience through tabbed browsing, without implying any official affiliation.
+
+<p align="center">
+  <img src="icons/final/logo_s.png" alt="logo_s.png" width="10%" height="10%">
+</p>
+
+## Screenshots
+
+![dark_mode.png](icons/dark_mode.png)
+![light_mode.png](icons/light_mode.png)
+![settings.png](icons/settings.png)
 
 ## Features
 
 - **Tabbed Interface**: Unlike the official Perplexity desktop app, SearchTabs allows you to open multiple Perplexity sessions in tabs
 - **Keyboard Shortcuts**: Includes essential shortcuts for tab management and navigation
-- **Lower Resource Usage**: Built with Python and PySide6 instead of Electron, potentially offering better performance and lower memory consumption
 - **Theme Management**: Supports light and dark themes with automatic detection
 
-## Installation
+## Releases
 
-### Dependencies
-- Python 3.6+
-- PySide6
-- darkdetect
+Check the [Releases](https://github.com/Avaxerrr/SearchTabs_Perplexity_Desktop_Alternative/releases) page for the latest versions and download options. Each release includes detailed notes about new features, improvements, and bug fixes.
 
-```bash
-pip install PySide6 darkdetect
-```
+## Known Limitations
 
-### Running the Application
-```bash
-python main.py
-```
+- **No Voice Search**: Voice search functionality is not supported as it's only available in the official Perplexity desktop app and mobile versions, not in the web interface.
+- **Rendering Issues**: Users may experience occasional black screens when resizing the application window due to limitations in the Qt WebEngine. This issue is planned to be addressed in an upcoming release.
+- **Platform Availability**: Currently limited to Windows since I don't have Mac or Linux to package the app as of the moment.
+- **Theme Synchronization**: When changing the app theme to dark/light mode, Perplexity's interface does not automatically adjust. Users need to manually change the theme in Perplexity's settings.
 
-## Usage
-
-### Current Shortcuts
-- **New Tab**: Ctrl+T
-- **Close Tab**: Ctrl+W
-- **Refresh Page**: Ctrl+R
-- **Switch Between Tabs**: Ctrl+Tab
-
-### Upcoming Features
-- **Find in Page**: Ctrl+F functionality
-- **System Tray Integration**: Minimize to system tray
+## Development Roadmap
+**Upcoming versions of SearchTabs aim to include the following features:**
+- **Find in Page**: Ctrl+F functionality for searching content
+- **System Tray Integration**: Minimize to system tray for background operation
 - **Always on Top**: Option to keep the window above other applications
-- **Additional Shortcuts**: More keyboard shortcuts for improved productivity
+- **Enhanced Tab Management**: Option to reopen previously closed tabs
+- **UI Improvements**: Draggable tabs and refined interface elements
+- **Performance Optimization**: Improved memory management and startup time
+- **Cross-Platform Support**: Extending availability to macOS and Linux
 
-## Screenshots
+These features will be implemented gradually in future updates, enhancing the functionality and user experience of SearchTabs over time.
 
-![image](https://github.com/user-attachments/assets/efb88f47-0ccf-4e8f-820b-aedf300fb0f1)
-![image](https://github.com/user-attachments/assets/9143c958-31d6-4943-9e28-fd5a00292932)
+## Feedback & Suggestions
 
+Your feedback is valuable for improving SearchTabs! If you have suggestions, feature requests, or encounter any issues:
 
+- Open an [Issue](https://github.com/Avaxerrr/SearchTabs_Perplexity_Desktop_Alternative/issues) on GitHub
+- Submit feature requests through the Issues page with the "enhancement" label
+- For general feedback, reach out through the contact methods below
 
-## Roadmap
-
-- Find in page functionality (Ctrl+F)
-- System tray integration
-- Always on top option
-- Performance optimization
-- Additional customization options
-
-## Contributing
-
-Contributions to SearchTabs are welcome! Here's how you can contribute:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-Please ensure your code follows the existing style and includes appropriate comments.
+User experiences and suggestions directly influence the development roadmap.
 
 ## License
 
-This project is licensed under the MIT License - see below for details:
+This project is licensed under the MIT License - see the [LICENSE]([license.md](license.md)) file for details.
 
-```
-MIT License
+## Contact
 
-Copyright (c) 2023 Avaxerrr
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+- Discord: avaxerrr
+- Email: zonemaxq@gmail.com
 
 ## Disclaimer
 
 SearchTabs is not affiliated with, associated with, or endorsed by Perplexity AI. This is an unofficial application created to provide a tabbed interface for accessing Perplexity's web services. Users should comply with Perplexity's terms of service when using this application.
 
-The primary purpose of this application is to provide a tabbed interface and potentially lower resource consumption compared to Electron-based alternatives. All Perplexity content is accessed through their official website, and this application does not modify, store, or redistribute any of Perplexity's proprietary content or services.
+The primary purpose of this application is to provide a tabbed interface for Perplexity's web services. All Perplexity content is accessed through their official website, and this application does not modify, store, or redistribute any of Perplexity's proprietary content or services.

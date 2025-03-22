@@ -1,0 +1,3 @@
+python -m nuitka --standalone --windows-icon-from-ico=logo.ico --enable-plugin=pyside6 --include-qt-plugins=sensible,platforms --include-data-dir=icons/final=icons/final --lto=yes --disable-ccache --python-flag=no_site --mingw64 --noinclude-pytest-mode=nofollow --noinclude-setuptools-mode=nofollow --output-filename=SearchTabs main.py
+
+python -m nuitka --standalone --windows-icon-from-ico=logo.ico --enable-plugin=pyside6 --include-qt-plugins=sensible,platforms --include-data-dir=icons/final=icons/final --lto=yes --disable-ccache --python-flag=no_site --mingw64 --noinclude-pytest-mode=nofollow --noinclude-setuptools-mode=nofollow --windows-console-mode=attach --output-filename=SearchTabs main.py

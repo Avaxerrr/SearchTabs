@@ -14,7 +14,7 @@ class SettingsWindow(QDialog):
         self.setWindowTitle("Settings")
 
         # Set a larger fixed size to accommodate all content comfortably
-        self.setFixedSize(300, 720)  # Increased height to accommodate new section
+        self.setFixedSize(300, 710)  # Increased height to accommodate new section
 
         # Apply current theme to settings window
         self.setPalette(self.browserwindow.theme_manager.get_palette())
@@ -117,20 +117,20 @@ class SettingsWindow(QDialog):
         switchtabs_shortcut = QLabel("Ctrl+Tab")
         switchtabs_shortcut.setMinimumWidth(100)
 
-        sendtotray_shortcut = QLabel("Ctrl+Shift+M")
-        sendtotray_shortcut.setMinimumWidth(100)
+        #sendtotray_shortcut = QLabel("Ctrl+Shift+M") #disable for now
+        #sendtotray_shortcut.setMinimumWidth(100) #disable for now
 
         shortcuts_layout.addRow("Reload:", reload_shortcut)
         shortcuts_layout.addRow("Add New Tab:", addtab_shortcut)
         shortcuts_layout.addRow("Close Tab:", closetab_shortcut)
         shortcuts_layout.addRow("Switch Between Tabs:", switchtabs_shortcut)
-        shortcuts_layout.addRow("Send to Tray:", sendtotray_shortcut)
+        #shortcuts_layout.addRow("Send to Tray:", sendtotray_shortcut) #disable for now
 
         shortcuts_group.setLayout(shortcuts_layout)
         layout.addWidget(shortcuts_group)
 
-        # Developer Tools Group
-        dev_group = QGroupBox("Developer Tools")
+        # Diagnostic
+        dev_group = QGroupBox("Diagnostics")
         dev_layout = QVBoxLayout()
 
         self.log_terminal_button = QPushButton("Open Log Terminal")

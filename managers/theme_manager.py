@@ -347,16 +347,16 @@ class ThemeManager(QObject):
         # Icon mapping dictionary
         icon_paths = {
             "Light": {
-                "home": "icons/home_dark.png",
-                "add": "icons/add_tab_dark.png",
-                "settings": "icons/tune_dark.png"
+                "home": "icons/final/home_dark.png",
+                "add": "icons/final/add_tab_dark.png",
+                "settings": "icons/final/tune_dark.png"
             },
             "Dark": {
-                "home": "icons/home.png",
-                "add": "icons/add_tab.png",
-                "settings": "icons/tune.png"
+                "home": "icons/final/home.png",
+                "add": "icons/final/add_tab.png",
+                "settings": "icons/final/tune.png"
             }
         }
 
         theme_key = "Light" if effective_theme == "Light" else "Dark"
-        return icon_paths[theme_key].get(icon_name, "icons/setting.png")  # Default to settings icon
+        return icon_paths[theme_key].get(icon_name, "icons/final/setting.png")  # Default to settings icon
