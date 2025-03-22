@@ -14,6 +14,19 @@ SearchTabs is a lightweight desktop wrapper application for Perplexity that brin
 ![Screenshot 2025-03-22 230853](https://github.com/user-attachments/assets/2f38ef4b-6831-46e7-b5d0-cb065307051e)
 
 
+## Is SearchTabs Safe?
+Yes, SearchTabs is safe to use. Here's why:
+
+- **Open Source**: The entire codebase is publicly available for review on GitHub, allowing anyone to inspect it for security issues
+- **Simple Architecture**: The application is a straightforward web wrapper that uses PySide6's QtWebEngine to display Perplexity's website in a desktop environment
+- **No Data Collection**: SearchTabs doesn't collect, store, or transmit any user data - it simply provides an interface to access Perplexity's web service
+- **No Background Processes**: The app only runs when you launch it and doesn't install any background services or hidden components
+- **Minimal Permissions**: SearchTabs requires only the permissions needed to function as a web browser wrapper
+- **Transparent Build Process**: The application is packaged using Nuitka, a Python compiler that converts Python code to C, maintaining the original functionality without adding hidden features
+
+The application's primary purpose is simply to provide a tabbed interface for Perplexity's web service, with no additional tracking or data collection mechanisms.
+
+
 ## Features
 
 - **Tabbed Interface**: Unlike the official Perplexity desktop app, SearchTabs allows you to open multiple Perplexity sessions in tabs
