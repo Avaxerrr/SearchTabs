@@ -56,7 +56,7 @@ User experiences and suggestions directly influence the development roadmap.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE]([license.md](license.md)) file for details.
+This project is licensed under the MIT License - see the [LICENSE]([[license.md](license.md)](https://github.com/Avaxerrr/SearchTabs_Perplexity_Desktop_Alternative?tab=MIT-1-ov-file)) file for details.
 
 ## Contact
 
